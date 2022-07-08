@@ -1,39 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
-//Custom react hook with use as prefix
-function useInput(initialValue){
-  const [value, setValue] = useState(initialValue);
-  //Return two properties
-  return [
-    {
-      value, 
-      onChange: (e) => setValue(e.target.value)
-    },
-    () => setValue(initialValue)
-  ];
-}
+//Using API's in React
 
 function App() {
-  const [titleProps, resetTitle] = useInput("");
-  const [colorProps , resetColor] = useState("#00000");
-  const submit = (e) => {
-    e.preventDefault();
-    alert(`${titleProps.value}, ${colorProps.value}`);
-    resetTitle();
-    resetColor("#00000");
-  };
+
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch(`https://api.github.com/users/michaelmburu`)
+    .then(response => response.json())
+    .then(setData) //same as data => SetData(data)
+  }, []);
+
+  if(data) return <pre>{JSON.stringify(data, null, 2)}</pre>
 
   return (
-    <form onSubmit={submit}>
-      <input type="text" 
-        {...titleProps}
-        placeholder='color titles'
-      />
-      <input {...colorProps} type="color" 
-       />
-      <button>ADD</button>
-    </form>
+    <h1>Data</h1>
   );
 }
 
