@@ -1,33 +1,57 @@
-import React, { useState, useEffect } from 'react';
 import './App.css';
+import { Link, Outlet } from 'react-router-dom';
 
-//Working wih render props
+//Working wih react router
 
-const mtkenya_peaks = [
-  {name: "Lenana", elevation: 4800},
-  {name: "Batian", elevation: 5199}, 
-  {name: "Nelion", elevation: 4985}
-]
-
-function List({data, renderItem, renderEmpty}){
-  return !data.length ? (renderEmpty) : (
-    <ul>
-      {data.map((item) => (
-        <li key={item.name}>{renderItem(item)}</li>
-      ))}
-    </ul>
+function Home() {
+  return (
+    <div>
+      <nav>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>My Website</h1>
+    </div>
   )
 }
 
-function App() {
-
-    return (
-     <List 
-        data={mtkenya_peaks} 
-        renderEmpty={<p>This list is empty</p>}
-        renderItem={item => <>{item.name} {item.elevation}</>} 
-     />
-    );
+export function About() {
+  return (
+    <div>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>About Us</h1>
+      <Outlet />
+    </div>
+  )
 }
 
-export default App;
+export function History() {
+  return (
+    <div>
+      <h1>Our History</h1>
+    </div>
+  )
+}
+
+export function Contact() {
+  return(
+    <div>
+       <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+      <h1>Contact Us</h1>
+    </div>
+  )
+}
+
+export function App() {
+    return (
+     <Home />
+    );
+}
